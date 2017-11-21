@@ -8,7 +8,7 @@ HiddenText.propTypes = {
 }
 
 function HiddenText({question, text, guesses}) {
-  const placeholder = text.split('').map((char, index) => {
+  const placeholder = (text || '').split('').map((char, index) => {
     const ch = char === ' ' || guesses.indexOf(char.toLowerCase()) > -1 ? char : '_'
     return (<span key={index}>{ch}</span>)
   })

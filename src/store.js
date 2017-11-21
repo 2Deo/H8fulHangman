@@ -1,24 +1,31 @@
-import {createStore} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
+import thunk from 'redux-thunk'
 
 const initialState = {
-  question: "The Prophet Muhammad said: ... is good for fever, when cooked in a form of soup.",
-  text: "Barley",
+  question: null,
+  text: null,
   guesses: [],
   lives: 7
 }
 
 function reducer(state = initialState, action) {
-  const {type} = action
+  const {type, payload} = action
 
   if (type === 'DECREMENT_LIVES') {
     const {lives} = state
     return {...state, lives: lives -1}
   } else if (type === 'GUESS_LETTER') {
-    const guesses = [...state.guesses, action.payload]
+    const guesses = [...state.guesses, payload]
     return {...state, guesses}
+  } else if (type === 'DATA_LOADED') {
+    const index = Math.floor(Math.random() * payload.length)
+    const {text, question} = payload[index]
+    return {...state, subjects: payload, text, question}
   }
 
   return state
 }
 
-export default createStore(reducer)
+const middleware = applyMiddleware(thunk)
+
+export default createStore(reducer, middleware)

@@ -4,9 +4,13 @@ import logo from './logo.png'
 import HiddenText from './components/HiddenText'
 import Alphabet from './components/Alphabet'
 import Hangman from './components/Hangman'
-import {decrementLives, guessLetter} from './actions'
+import {decrementLives, guessLetter, fetchData} from './actions'
 
 class App extends Component {
+  componentDidMount() {
+    this.props.dispatch(fetchData())
+  }
+  
   checkLetter(letter) {
     const {text, lives, dispatch} = this.props
 
