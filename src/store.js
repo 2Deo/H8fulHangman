@@ -7,7 +7,12 @@ const initialState = {
   lives: 7
 }
 
-function reducer(state = initialState) {
+function reducer(state = initialState, action) {
+  if (action.type === 'DECREMENT_LIVES') {
+    const {lives} = state
+    return {...state, lives: lives -1}
+  }
+  
   return state
 }
 

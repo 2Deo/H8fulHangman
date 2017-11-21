@@ -4,32 +4,38 @@ import logo from './logo.png'
 import HiddenText from './components/HiddenText'
 import Alphabet from './components/Alphabet'
 import Hangman from './components/Hangman'
+import {decrementLives} from './actions'
 
 class App extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      guesses: [],
-      lives: 7
+      guesses: []
     }
   }
 
   checkLetter(letter) {
-    const {guesses, lives} = this.state
-    const {text} = this.props
+    const {guesses} = this.state
+    const {text, lives, dispatch} = this.props
 
-    if (lives > 0) {
-      this.setState({
-        guesses: [...guesses, letter],
-        lives: text.toLowerCase().indexOf(letter) > -1 ? lives : lives -1
-      })
+    if (lives === 0) {
+      return
     }
+
+    if (text.toLowerCase().indexOf(letter) === -1) {
+      dispatch(decrementLives())
+    }
+
+    this.setState({
+      guesses: [...guesses, letter]
+    })
   }
 
+
   render() {
-    const {guesses, lives} = this.state
-    const {question, text} = this.props
+    const {guesses} = this.state
+    const {question, text, lives} = this.props
 
     return (
       <div>
@@ -42,8 +48,8 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({question, text}) {
-  return {question, text}
+function mapStateToProps({question, text, lives}) {
+  return {question, text, lives}
 }
 
 export default connect(mapStateToProps)(App)
