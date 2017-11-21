@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import logo from './logo.png';
+import React, { Component } from 'react'
+import {connect} from 'react-redux'
+import logo from './logo.png'
 import HiddenText from './components/HiddenText'
 import Alphabet from './components/Alphabet'
 import Hangman from './components/Hangman'
@@ -9,15 +10,14 @@ class App extends Component {
     super(props)
 
     this.state = {
-      question: "The favourite food of Ali",
-      text: "Soy beans",
       guesses: [],
       lives: 7
     }
   }
 
   checkLetter(letter) {
-    const {text, guesses, lives} = this.state
+    const {guesses, lives} = this.state
+    const {text} = this.props
 
     if (lives > 0) {
       this.setState({
@@ -28,7 +28,8 @@ class App extends Component {
   }
 
   render() {
-    const {question, text, guesses, lives } = this.state
+    const {guesses, lives} = this.state
+    const {question, text} = this.props
 
     return (
       <div>
@@ -41,4 +42,8 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps({question, text}) {
+  return {question, text}
+}
+
+export default connect(mapStateToProps)(App)
