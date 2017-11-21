@@ -9,22 +9,24 @@ class App extends Component {
 
     this.state = {
       question: "The favourite food of Ali",
-      text: "Soy beans"
+      text: "Soy beans",
+      guesses: []
     }
   }
 
   checkLetter(letter) {
-    console.log(letter)
+    const {guesses} = this.state
+    this.setState({guesses: [...guesses, letter]})
   }
 
   render() {
-    const {question, text } = this.state
+    const {question, text, guesses } = this.state
 
     return (
       <div>
           <img src={logo} alt="H8ful Hangman" />
-          <HiddenText question={question} text={text} />
-          <Alphabet onLetterClick={this.checkLetter.bind(this)}/>
+          <HiddenText question={question} text={text} guesses={guesses} />
+          <Alphabet onLetterClick={this.checkLetter.bind(this)} guesses={guesses}/>
       </div>
     )
   }

@@ -8,12 +8,13 @@ const letters = [
 ]
 
 Alphabet.propTypes = {
-  onLetterClick: PropTypes.func
+  onLetterClick: PropTypes.func,
+  guesses: PropTypes.array
 }
 
-function Alphabet({onLetterClick}) {
+function Alphabet({onLetterClick, guesses}) {
   const buttons = letters.map((letter, index) => {
-    return (<button key={index} onClick={() => onLetterClick(letter)}>{letter}</button>)
+    return (<button key={index} disabled={guesses.indexOf(letter) > -1} onClick={() => onLetterClick(letter)}>{letter}</button>)
   })
 
   return (
