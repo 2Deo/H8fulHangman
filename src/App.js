@@ -10,7 +10,7 @@ class App extends Component {
   componentDidMount() {
     this.props.dispatch(fetchData())
   }
-  
+
   checkLetter(letter) {
     const {text, lives, dispatch} = this.props
 
