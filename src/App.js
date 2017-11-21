@@ -4,19 +4,10 @@ import logo from './logo.png'
 import HiddenText from './components/HiddenText'
 import Alphabet from './components/Alphabet'
 import Hangman from './components/Hangman'
-import {decrementLives} from './actions'
+import {decrementLives, guessLetter} from './actions'
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      guesses: []
-    }
-  }
-
   checkLetter(letter) {
-    const {guesses} = this.state
     const {text, lives, dispatch} = this.props
 
     if (lives === 0) {
@@ -27,15 +18,12 @@ class App extends Component {
       dispatch(decrementLives())
     }
 
-    this.setState({
-      guesses: [...guesses, letter]
-    })
+    dispatch(guessLetter(letter))
   }
 
 
   render() {
-    const {guesses} = this.state
-    const {question, text, lives} = this.props
+    const {question, text, lives, guesses} = this.props
 
     return (
       <div>
@@ -48,8 +36,8 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({question, text, lives}) {
-  return {question, text, lives}
+function mapStateToProps({question, text, lives, guesses}) {
+  return {question, text, lives, guesses}
 }
 
 export default connect(mapStateToProps)(App)

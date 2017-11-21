@@ -8,11 +8,16 @@ const initialState = {
 }
 
 function reducer(state = initialState, action) {
-  if (action.type === 'DECREMENT_LIVES') {
+  const {type} = action
+
+  if (type === 'DECREMENT_LIVES') {
     const {lives} = state
     return {...state, lives: lives -1}
+  } else if (type === 'GUESS_LETTER') {
+    const guesses = [...state.guesses, action.payload]
+    return {...state, guesses}
   }
-  
+
   return state
 }
 
